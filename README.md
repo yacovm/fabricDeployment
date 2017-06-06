@@ -4,6 +4,9 @@ What does it do?
 - Deploys on remote linux servers a network that consists of:
     - An Ordering service (solo)
     - Peers, as many as needed, in the same organization
+- "detects" if Fabric is already installed, and if not - installs it
+- Sets up everything to run with TLS
+- Creates a single channel, installs and instantiates example02 as a sanity test
 
 ### Introduction:
 This tool was created to help quickly set up an environment of Hyperledger Fabric
