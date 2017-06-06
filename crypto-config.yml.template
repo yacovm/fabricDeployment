@@ -1,0 +1,67 @@
+
+# ---------------------------------------------------------------------------
+# "OrdererOrgs" - Definition of organizations managing orderer nodes
+# ---------------------------------------------------------------------------
+OrdererOrgs:
+  # ---------------------------------------------------------------------------
+  # Orderer
+  # ---------------------------------------------------------------------------
+  - Name: Org0
+    Domain: hrl.ibm.il
+
+    # ---------------------------------------------------------------------------
+    # "Specs" - See PeerOrgs below for complete description
+    # ---------------------------------------------------------------------------
+    Specs:
+      - Hostname: ORDERER_IP
+
+# ---------------------------------------------------------------------------
+# "PeerOrgs" - Definition of organizations managing peer nodes
+# ---------------------------------------------------------------------------
+PeerOrgs:
+  # ---------------------------------------------------------------------------
+  # Org1
+  # ---------------------------------------------------------------------------
+  - Name: Org1
+    Domain: hrl.ibm.il
+
+    # ---------------------------------------------------------------------------
+    # "CA"
+    # ---------------------------------------------------------------------------
+    # Uncomment this section to enable the explicit definition of the CA for this
+    # organization.  This entry is a Spec.  See "Specs" section below for details.
+    # ---------------------------------------------------------------------------
+    # CA:
+    #    Hostname: ca # implicitly ca.org1.hrl.ibm.il
+
+    # ---------------------------------------------------------------------------
+    # "Specs"
+    # ---------------------------------------------------------------------------
+    # Uncomment this section to enable the explicit definition of hosts in your
+    # configuration.  Most users will want to use Template, below
+    #
+    # Specs is an array of Spec entries.  Each Spec entry consists of two fields:
+    #   - Hostname:   (Required) The desired hostname, sans the domain.
+    #   - CommonName: (Optional) Specifies the template or explicit override for
+    #                 the CN.  By default, this is the template:
+    #
+    #                              "{{.Hostname}}.{{.Domain}}"
+    #
+    #                 which obtains its values from the Spec.Hostname and
+    #                 Org.Domain, respectively.
+    #   - SANS:       (Optional) Specifies one or more Subject Alternative Names
+    #                 the be set in the resulting x509.  Accepts template
+    #                 variables {{.Hostname}}, {{.Domain}}, {{.CommonName}}
+    #                 NOTE: Two implicit entries are created for you:
+    #                     - {{ .CommonName }}
+    #                     - {{ .Hostname }}
+    # ---------------------------------------------------------------------------
+    Specs:
+    #   - Hostname: foo # implicitly "foo.org1.hrl.ibm.il"
+    #     CommonName: foo27.org5.hrl.ibm.il # overrides Hostname-based FQDN set above
+    #     SANS:
+    #       - "bar.{{.Domain}}"
+    #       - "altfoo.{{.Domain}}"
+    #       - "{{.Hostname}}.org6.net"
+    #   - Hostname: bar
+    #   - Hostname: baz
