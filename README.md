@@ -6,6 +6,7 @@ This tool was created to help quickly set up an environment of Hyperledger Fabri
 
 ### Prerequisites:
 
+- Empty physical servers/virtual machines to be used as a solo ordering service and peers
 - Tested with Ubuntu 16.04.2 LTS, other distributions might also work
 - git client installed on the servers
 - Ability to do "sudo" without having to enter a password on the servers
