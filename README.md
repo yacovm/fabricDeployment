@@ -1,5 +1,9 @@
 # Hyperledger Fabric deployment script
 
+What does it do?
+- Deploys on remote linux servers a network that consists of:
+    - An Ordering service (solo)
+    - Peers, as many as needed, in the same organization
 
 ### Introduction:
 This tool was created to help quickly set up an environment of Hyperledger Fabric
