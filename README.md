@@ -11,8 +11,12 @@ What does it do?
 ### Introduction:
 This tool was created to help quickly set up an environment of Hyperledger Fabric
 
+### Disclaimer/Warning :
+ The script would wipe everything in `/var/hyerledger/production` and delete some of the docker images, direct this script only to empty VMs / servers created solely for Fabric deployment.
+
 ### Prerequisites:
 
+- Local git repo of Hyperledger Fabric in `$GOPATH/src/github.com/hyperledger/fabric`
 - Empty physical servers/virtual machines to be used as a solo ordering service and peers
 - Tested with Ubuntu 16.04.2 LTS, other distributions might also work
 - git client installed on the servers
