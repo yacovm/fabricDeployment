@@ -156,11 +156,19 @@ for p in $peers ; do
         ssh $p "docker images | grep 'dev-' | awk '{print $3}' | xargs docker rmi &> /dev/null " || echo -n "."
 done
 
-echo "Starting orderer"
-ssh -n -f $orderer "bash -c '. ~/.profile; cd /opt/gopath/src/github.com/hyperledger/fabric ; make orderer && make peer && nohup ./build/bin/orderer &> orderer.out & '"
-echo "Starting peers"
+echo "Installing orderer"
+ssh $orderer "bash -c '. ~/.profile; cd /opt/gopath/src/github.com/hyperledger/fabric ; make orderer && make peer'"
+echo "Installing peers"
 for p in $peers ; do
-        ssh -n -f $p "bash -c '. ~/.profile; cd /opt/gopath/src/github.com/hyperledger/fabric ; make peer && nohup ./build/bin/peer node start --peer-defaultchain=false &> $p.out & '"
+	echo "Installing peer $p"
+        ssh $p "bash -c '. ~/.profile; cd /opt/gopath/src/github.com/hyperledger/fabric ; make peer' " 
+done
+
+echo "Starting orderer"
+ssh $orderer " . ~/.profile; cd /opt/gopath/src/github.com/hyperledger/fabric ;  echo './build/bin/orderer &> orderer.out &' > start.sh; bash start.sh "
+for p in $peers ; do
+        echo "Starting peer $p"
+	ssh $p " . ~/.profile; cd /opt/gopath/src/github.com/hyperledger/fabric ;  echo './build/bin/peer node start &> $p.out &' > start.sh; bash start.sh "
 done
 
 echo "waiting for orderer and peers to be online"
