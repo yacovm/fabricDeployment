@@ -143,7 +143,7 @@ echo "Deploying configuration"
 for p in $orderer $peers ; do
         ssh $p "pkill orderer; pkill peer" || echo ""
         ssh $p "rm -rf /var/hyperledger/production/*"
-        ssh $p "cd /opt/gopath/src/github.com/hyperledger/fabric ; git reset HEAD --hard && git pull origin master"
+        ssh $p "cd /opt/gopath/src/github.com/hyperledger/fabric ; git reset HEAD --hard && git pull"
         scp -r $p/sampleconfig/* $p:/opt/gopath/src/github.com/hyperledger/fabric/sampleconfig/
 done
 
