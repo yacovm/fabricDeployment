@@ -6,3 +6,5 @@ crypto-config.yml
 configtx.yaml
 *.block
 *.tx
+log*
+config-*
