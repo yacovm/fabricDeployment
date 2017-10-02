@@ -1,0 +1,46 @@
+---
+Profiles:
+    Genesis:
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+        Consortiums:
+             SampleConsortium:
+                Organizations:
+                - *PeerOrg
+    Channels:
+        Consortium: SampleConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *PeerOrg
+Organizations:
+    - &OrdererOrg
+        Name: OrdererOrg
+        ID: OrdererOrg
+        MSPDir: crypto-config/ordererOrganizations/hrl.ibm.il/msp
+        AdminPrincipal: Role.ADMIN
+
+    - &PeerOrg
+        Name: PeerOrg
+        ID: PeerOrg
+        MSPDir: crypto-config/peerOrganizations/hrl.ibm.il/msp
+        AdminPrincipal: Role.ADMIN
+        AnchorPeers:
+            - Host: ANCHOR_PEER_IP
+              Port: 7051
+
+Orderer: &OrdererDefaults
+    OrdererType: kafka
+
+    Addresses:
+        - ORDERER_IP:7050
+
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 40
+        AbsoluteMaxBytes: 98 MB
+        PreferredMaxBytes: 512 KB
+    Kafka:
+      Brokers:

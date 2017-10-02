@@ -1,0 +1,11 @@
+OrdererOrgs:
+  - Name: Org0
+    Domain: hrl.ibm.il
+    Specs:
+      - Hostname: ORDERER_HOSTNAME
+        SANS:
+          - ORDERER_IP
+PeerOrgs:
+  - Name: Org1
+    Domain: hrl.ibm.il
+    Specs:

@@ -2,9 +2,12 @@
 
 What does it do?
 - Deploys on remote linux servers a network that consists of:
-    - An Ordering service (solo)
+    - An Ordering service (solo or kafka)
     - Peers, as many as needed, in the same organization
+    - A Zookeeper node
+    - Kafka brokers, as many as needed
 - "detects" if Fabric is already installed, and if not - installs it
+- "detects" if Kafka is installed on Zookeeper and Broker nodes, anf if not installs it
 - Sets up everything to run with TLS
 - Creates a single channel, installs and instantiates example02 as a sanity test
 
@@ -26,6 +29,7 @@ This tool was created to help quickly set up an environment of Hyperledger Fabri
 
 #### How to use
 - Edit `config.sh` with the hostnames of the servers that are to be used as an orderer and peers
+- Choose the ordering service type (kafa or solo) in `config.sh`
 - Run the `deploy.sh` script
 
 
