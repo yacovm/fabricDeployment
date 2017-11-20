@@ -1,6 +1,13 @@
 #!/bin/bash -e
 
 
+cmd() {
+	echo -n "Invoking "
+	echo -e -n '\033[0;92m'
+	echo  `echo "$@"`
+	echo -e '\033[0;37m'
+	eval $@
+}
 
 getIP() {
         ssh $1 "ip addr | grep 'inet .*global' | cut -f 6 -d ' ' | cut -f1 -d '/' | head -n 1"
@@ -233,3 +240,25 @@ while :; do
 		break
 	fi
 done
+
+echo "PRESS ENTER TO CONTINUE"
+read bla
+
+ssh ${bootPeer} "mkdir -p /opt/gopath/src/github.com/hyperledger/fabric/examples/chaincode/go/loanshark"
+scp loanshark.go ${bootPeer}:/opt/gopath/src/github.com/hyperledger/fabric/examples/chaincode/go/loanshark/
+mkdir -p $GOPATH/src/github.com/hyperledger/fabric/examples/chaincode/go/loanshark
+cp loanshark.go $GOPATH/src/github.com/hyperledger/fabric/examples/chaincode/go/loanshark/
+echo "press any key to install chaincode"; read bla
+cmd CORE_PEER_LOCALMSPID=PeerOrg CORE_PEER_MSPCONFIGPATH=`pwd`/crypto-config/peerOrganizations/hrl.ibm.il/users/Admin@hrl.ibm.il/msp/ CORE_PEER_ADDRESS=${bootPeer}:7051 ./peer chaincode install -p github.com/hyperledger/fabric/examples/chaincode/go/loanshark -n loanshark -v 1.0
+echo "press any key to instantiate chaincode"; read bla
+cmd CORE_PEER_TLS_ROOTCERT_FILE=`pwd`/crypto-config/peerOrganizations/hrl.ibm.il/peers/${bootPeer}.hrl.ibm.il/tls/ca.crt CORE_PEER_LOCALMSPID=PeerOrg CORE_PEER_MSPCONFIGPATH=`pwd`/crypto-config/peerOrganizations/hrl.ibm.il/users/Admin@hrl.ibm.il/msp/ CORE_PEER_ADDRESS=${bootPeer}:7051 ./peer chaincode instantiate -n loanshark -v 1.0 -C yacov -c "'{\"Args\":[\"init\"]}'" -o ${orderer}:7050 --tls true --cafile `pwd`/crypto-config/ordererOrganizations/hrl.ibm.il/orderers/${orderer}.hrl.ibm.il/tls/ca.crt
+echo "press any key to query chaincode"; read bla
+cmd CORE_PEER_TLS_ENABLED=true CORE_PEER_TLS_ROOTCERT_FILE=/home/yacovm/fabricDeployment/crypto-config/peerOrganizations/hrl.ibm.il/peers/vm2.hrl.ibm.il/tls/ca.crt CORE_PEER_LOCALMSPID=PeerOrg CORE_PEER_MSPCONFIGPATH=/home/yacovm/fabricDeployment/crypto-config/peerOrganizations/hrl.ibm.il/users/Admin@hrl.ibm.il/msp/ CORE_PEER_ADDRESS=vm2:7051 ./peer chaincode query -C yacov -o vm1:7050 -n loanshark --cafile `pwd`/crypto-config/ordererOrganizations/hrl.ibm.il/orderers/vm1.hrl.ibm.il/tls/ca.crt --tls -c "'{\"Args\": [\"query\", \"moshe\"]}'"
+echo "press any key to invoke chaincode"; read bla
+cmd CORE_PEER_TLS_ENABLED=true CORE_PEER_TLS_ROOTCERT_FILE=/home/yacovm/fabricDeployment/crypto-config/peerOrganizations/hrl.ibm.il/peers/vm2.hrl.ibm.il/tls/ca.crt CORE_PEER_LOCALMSPID=PeerOrg CORE_PEER_MSPCONFIGPATH=/home/yacovm/fabricDeployment/crypto-config/peerOrganizations/hrl.ibm.il/users/Admin@hrl.ibm.il/msp/ CORE_PEER_ADDRESS=vm2:7051 ./peer chaincode invoke -C yacov -o vm1:7050 -n loanshark --cafile `pwd`/crypto-config/ordererOrganizations/hrl.ibm.il/orderers/vm1.hrl.ibm.il/tls/ca.crt --tls -c "'{\"Args\": [\"loan\", \"moshe\", \"100\"]}'"
+echo "press any key to query chaincode"; read bla
+cmd CORE_PEER_TLS_ENABLED=true CORE_PEER_TLS_ROOTCERT_FILE=/home/yacovm/fabricDeployment/crypto-config/peerOrganizations/hrl.ibm.il/peers/vm2.hrl.ibm.il/tls/ca.crt CORE_PEER_LOCALMSPID=PeerOrg CORE_PEER_MSPCONFIGPATH=/home/yacovm/fabricDeployment/crypto-config/peerOrganizations/hrl.ibm.il/users/Admin@hrl.ibm.il/msp/ CORE_PEER_ADDRESS=vm2:7051 ./peer chaincode query -C yacov -o vm1:7050 -n loanshark --cafile `pwd`/crypto-config/ordererOrganizations/hrl.ibm.il/orderers/vm1.hrl.ibm.il/tls/ca.crt --tls -c "'{\"Args\": [\"query\", \"moshe\"]}'"
+echo "press any key to invoke chaincode"; read bla
+cmd CORE_PEER_TLS_ENABLED=true CORE_PEER_TLS_ROOTCERT_FILE=/home/yacovm/fabricDeployment/crypto-config/peerOrganizations/hrl.ibm.il/peers/vm2.hrl.ibm.il/tls/ca.crt CORE_PEER_LOCALMSPID=PeerOrg CORE_PEER_MSPCONFIGPATH=/home/yacovm/fabricDeployment/crypto-config/peerOrganizations/hrl.ibm.il/users/Admin@hrl.ibm.il/msp/ CORE_PEER_ADDRESS=vm2:7051 ./peer chaincode invoke -C yacov -o vm1:7050 -n loanshark --cafile `pwd`/crypto-config/ordererOrganizations/hrl.ibm.il/orderers/vm1.hrl.ibm.il/tls/ca.crt --tls -c "'{\"Args\": [\"payback\", \"moshe\", \"75\"]}'"
+echo "press any key to query chaincode"; read bla
+cmd CORE_PEER_TLS_ENABLED=true CORE_PEER_TLS_ROOTCERT_FILE=/home/yacovm/fabricDeployment/crypto-config/peerOrganizations/hrl.ibm.il/peers/vm2.hrl.ibm.il/tls/ca.crt CORE_PEER_LOCALMSPID=PeerOrg CORE_PEER_MSPCONFIGPATH=/home/yacovm/fabricDeployment/crypto-config/peerOrganizations/hrl.ibm.il/users/Admin@hrl.ibm.il/msp/ CORE_PEER_ADDRESS=vm2:7051 ./peer chaincode query -C yacov -o vm1:7050 -n loanshark --cafile `pwd`/crypto-config/ordererOrganizations/hrl.ibm.il/orderers/vm1.hrl.ibm.il/tls/ca.crt --tls -c "'{\"Args\": [\"query\", \"moshe\"]}'"
