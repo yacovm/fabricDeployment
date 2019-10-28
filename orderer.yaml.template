@@ -93,7 +93,7 @@ General:
     # Genesis file: The file containing the genesis block to use when
     # initializing the orderer system channel and GenesisMethod is set to
     # "file". Ignored if GenesisMethod is set to "provisional".
-    GenesisFile: /home/yacovm/smartBFT/genesis.block
+    GenesisFile: DATA_DIR/genesis.block
 
     # LocalMSPDir is where to find the private crypto material needed by the
     # orderer. It is set relative here as a default for dev environments but
@@ -154,7 +154,7 @@ FileLedger:
     # Location: The directory to store the blocks in.
     # NOTE: If this is unset, a new temporary location will be chosen every time
     # the orderer is restarted, using the prefix specified by Prefix.
-    Location: /home/yacovm/smartBFT/ledger
+    Location: DATA_DIR/ledger
 
     # The prefix to use when generating a ledger directory in temporary space.
     # Otherwise, this value is ignored.
@@ -368,8 +368,8 @@ Consensus:
 
     # WALDir specifies the location at which Write Ahead Logs for etcd/raft are
     # stored. Each channel will have its own subdir named after channel ID.
-    WALDir: /home/yacovm/smartBFT/wal
+    WALDir: DATA_DIR/wal
 
     # SnapDir specifies the location at which snapshots for etcd/raft are
     # stored. Each channel will have its own subdir named after channel ID.
-    SnapDir: /home/yacovm/smartBFT/snapshot
+    SnapDir: DATA_DIR/snapshot
