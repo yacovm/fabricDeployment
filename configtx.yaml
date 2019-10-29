@@ -413,28 +413,28 @@ Profiles:
             OrdererType: smartbft
             SmartBFT:
                 Consenters:
-                - Host: orderer.example.com
+                - Host: 192.168.56.2
                   MSPID: OrdererMSP
                   Port: 7050
                   ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/vm1.example.com/tls/server.crt
                   ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/vm1.example.com/tls/server.crt
                   ConsenterId: 1
                   Identity: crypto-config/ordererOrganizations/example.com/orderers/vm1.example.com/msp/signcerts/vm1.example.com-cert.pem
-                - Host: orderer2.example.com
+                - Host: 192.168.56.3
                   MSPID: OrdererMSP
                   Port: 7050
                   ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/vm2.example.com/tls/server.crt
                   ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/vm2.example.com/tls/server.crt
                   ConsenterId: 2
                   Identity: crypto-config/ordererOrganizations/example.com/orderers/vm2.example.com/msp/signcerts/vm2.example.com-cert.pem
-                - Host: orderer3.example.com
+                - Host: 192.168.56.4
                   MSPID: OrdererMSP
                   Port: 7050
                   ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/vm3.example.com/tls/server.crt
                   ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/vm3.example.com/tls/server.crt
                   ConsenterId: 3
                   Identity: crypto-config/ordererOrganizations/example.com/orderers/vm3.example.com/msp/signcerts/vm3.example.com-cert.pem
-                - Host: orderer4.example.com
+                - Host: 192.168.56.5
                   MSPID: OrdererMSP
                   Port: 7050
                   ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/vm4.example.com/tls/server.crt
@@ -443,10 +443,10 @@ Profiles:
                   Identity: crypto-config/ordererOrganizations/example.com/orderers/vm4.example.com/msp/signcerts/vm4.example.com-cert.pem
                   MSPID: OrdererMSP
             Addresses:
-                - vm1:7050
-                - vm2:7050
-                - vm3:7050
-                - vm4:7050
+                - 192.168.56.2:7050
+                - 192.168.56.3:7050
+                - 192.168.56.4:7050
+                - 192.168.56.5:7050
 
             Organizations:
             - *OrdererOrg
